@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  todo-app:
+    build: ./app
+    links:
+      - todo-db
+    ports:
+      - "5000:5000"
+    depends_on:
+      - todo-db
+    networks:
+      - todo-net
+
+
+  todo-db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: todo_db
+    volumes:
+      - ./todo-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data:/var/lib/mysql  
+    networks:
+      - todo-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  todo-net:
+
