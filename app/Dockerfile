@@ -1,6 +1,9 @@
 FROM python:3.10
 EXPOSE 5000
+RUN mkdir /app
 WORKDIR /app
+
+COPY app/ .
 
 #COPY requirements.txt /app
 COPY app/requirements.txt /app
