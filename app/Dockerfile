@@ -1,6 +1,6 @@
 FROM python:3.10
 EXPOSE 5000
-RUN mkdir /app
+#RUN mkdir /app
 WORKDIR /app
 
 COPY app/ .
